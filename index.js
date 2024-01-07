@@ -53,10 +53,21 @@ app.post('/auth/signup', signupValidation, async (req, res) => {
     });
 
     await user.save()
-      .then(() => {
+      .then((savedUser) => {
+        const token = jwt.sign(
+          { _id: savedUser._id },
+          process.env.JWT_SECRET,
+          { expiresIn: '30d' }
+        );
+
+        const { password, ...restUser } = savedUser._doc;
+
         res.json({
           isSuccess: true,
-          data: {},
+          data: {
+            user: restUser,
+            token
+          },
           info: {}
         });
       })
