@@ -2,6 +2,11 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import { validationResult } from 'express-validator';
+import bcrypt from 'bcrypt';
+
+import { signupValidation } from './validations/auth.js';
+import UserModel from './models/User.js';
 
 dotenv.config();
 
@@ -22,13 +27,51 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
-app.post('/auth/signup', (req, res) => {
-  console.log(req.body);
+app.post('/auth/signup', signupValidation, async (req, res) => {
+  const errors = validationResult(req);
 
-  res.json({
-    isSuccess: true,
-    data: {}
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      isSuccess: false,
+      data: {},
+      info: {
+        message: 'Validation failed',
+        details: errors.array()
+      }
+    });
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+  const user = new UserModel({
+    username: req.body.username,
+    password: hashedPassword,
+    name: req.body.name,
+    avatar: req.body.avatar,
   });
+
+  await user.save()
+    .then(() => {
+      res.json({
+        isSuccess: true,
+        data: {},
+        info: {}
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({
+        isSuccess: false,
+        data: {},
+        info: {
+          message: 'Failed to create user',
+          details: null
+        }
+      })
+    })
+
+
 });
 
 app.listen(4000, (err) => {
