@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 
 import { signupValidation } from './validations/auth.js';
 import UserModel from './models/User.js';
+import checkAuth from './utils/checkAuth.js';
 
 dotenv.config();
 
@@ -143,7 +144,42 @@ app.post('/auth/signup', signupValidation, async (req, res) => {
       }
     });
   }
+});
 
+app.get('/auth/me', checkAuth, async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        isSuccess: false,
+        data: {},
+        info: {
+          message: 'User not found',
+          details: null
+        }
+      });
+    }
+
+    res.json({
+      isSuccess: true,
+      data: {
+        user
+      },
+      info: {}
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.status(500).json({
+      isSuccess: false,
+      data: {},
+      info: {
+        message: 'Failed to get me',
+        details: null
+      }
+    });
+  }
 });
 
 app.listen(4000, (err) => {
