@@ -27,6 +27,66 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+app.post('/auth/login', async (req, res) => {
+  try {
+    const user = await UserModel.findOne({ username: req.body.username });
+
+    if (!user) {
+      return res.status(404).json({
+        isSuccess: false,
+        data: {},
+        info: {
+          message: 'User does not exist',
+          details: null
+        }
+      })
+    }
+
+    const isValidPw = await bcrypt.compare(req.body.password, user._doc.password);
+
+    if (!isValidPw) {
+      return res.status(400).json({
+        isSuccess: false,
+        data: {},
+        info: {
+          message: 'Invalid password',
+          details: null
+        }
+      })
+    }
+
+    // if username and password are valid
+    const token = jwt.sign(
+      { _id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+
+    const { password, ...restUser } = user._doc;
+
+    res.json({
+      isSuccess: true,
+      data: {
+        user: restUser,
+        token
+      },
+      info: {}
+    });
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      isSuccess: false,
+      data: {},
+      info: {
+        message: 'Failed to log in',
+        details: null
+      }
+    });
+  }
+});
+
 app.post('/auth/signup', signupValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
