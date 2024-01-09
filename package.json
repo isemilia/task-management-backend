@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "tsc && node .",
+    "dev": "tsc && nodemon ."
   },
   "author": "",
   "license": "ISC",
@@ -17,8 +17,14 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.3"
   },
-  "type": "module",
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "@types/bcrypt": "^5.0.2",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/mongoose": "^5.11.97",
+    "@types/nodemon": "^1.19.6",
+    "nodemon": "^3.0.2",
+    "typescript": "^5.2.2"
   }
 }
