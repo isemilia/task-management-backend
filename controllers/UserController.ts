@@ -45,7 +45,8 @@ const signup = async (req: Request, res: Response) => {
           { expiresIn: '30d' }
         );
 
-        const { password, ...restUser } = savedUser;
+        const savedDoc = savedUser.toObject()
+        const { password, ...restUser } = savedDoc;
 
         res.json({
           isSuccess: true,
@@ -101,13 +102,14 @@ const login = async (req: Request, res: Response) => {
     }
 
     // if username and password are valid
+    const userDoc = user.toObject();
     const token = jwt.sign(
-      { _id: user._id },
+      { _id: userDoc._id },
       JWT_SECRET,
       { expiresIn: '30d' }
     );
 
-    const { password, ...restUser } = user;
+    const { password, ...restUser } = userDoc;
 
     res.json({
       isSuccess: true,
@@ -150,7 +152,7 @@ const getMe =  async (req: Request, res: Response) => {
     res.json({
       isSuccess: true,
       data: {
-        user
+        user: user
       },
       info: {}
     });
