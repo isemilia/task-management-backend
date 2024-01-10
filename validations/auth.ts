@@ -6,3 +6,8 @@ export const signupValidation = [
   body('password').isLength({ min: 6 }),
   body('avatar').optional().isURL(),
 ];
+
+export const loginValidation = [
+  body('username').isLength({ min: 6 }),
+  body('password').isLength({ min: 6 })
+];
