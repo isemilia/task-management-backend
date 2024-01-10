@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import express from 'express'
+import express, {NextFunction, Request, Response} from 'express'
 
 
-export default (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export default (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization || '';
 
   if(process.env.JWT_SECRET === undefined){

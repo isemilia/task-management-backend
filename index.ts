@@ -10,7 +10,7 @@ import './utils/server'
 //
 // import { signupValidation } from './validations/auth.js';
 // import checkAuth from './utils/checkAuth.js';
-// import UserController from './controllers/UserController.js';
+// import UserController from './controllers/UserController.ts';
 //
 // dotenv.config();
 //

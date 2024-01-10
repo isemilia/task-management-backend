@@ -1,10 +1,18 @@
+import express, {Request, Response} from 'express';
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import UserModel from '../models/User.js';
 
-const signup = async (req, res) => {
+if(process.env.DATABASE_URI === undefined || process.env.JWT_SECRET === undefined){
+  throw Error("DATABASE_URI")
+}
+
+const DATABASE_URI = process.env.DATABASE_URI
+const JWT_SECRET = process.env.JWT_SECRET
+
+const signup = async (req: Request, res: Response) => {
   try {
     const errors = validationResult(req);
 
@@ -33,11 +41,11 @@ const signup = async (req, res) => {
       .then((savedUser) => {
         const token = jwt.sign(
           { _id: savedUser._id },
-          process.env.JWT_SECRET,
+          JWT_SECRET,
           { expiresIn: '30d' }
         );
 
-        const { password, ...restUser } = savedUser._doc;
+        const { password, ...restUser } = savedUser;
 
         res.json({
           isSuccess: true,
@@ -62,9 +70,11 @@ const signup = async (req, res) => {
   }
 }
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
   try {
-    const user = await UserModel.findOne({ username: req.body.username });
+    const user = await UserModel
+      .findOne({ username: req.body.username })
+      .then(result => result);
 
     if (!user) {
       return res.status(404).json({
@@ -77,7 +87,7 @@ const login = async (req, res) => {
       })
     }
 
-    const isValidPw = await bcrypt.compare(req.body.password, user._doc.password);
+    const isValidPw = await bcrypt.compare(req.body.password, user.password);
 
     if (!isValidPw) {
       return res.status(400).json({
@@ -93,11 +103,11 @@ const login = async (req, res) => {
     // if username and password are valid
     const token = jwt.sign(
       { _id: user._id },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: '30d' }
     );
 
-    const { password, ...restUser } = user._doc;
+    const { password, ...restUser } = user;
 
     res.json({
       isSuccess: true,
@@ -122,7 +132,7 @@ const login = async (req, res) => {
   }
 }
 
-const getMe = async (req, res) => {
+const getMe =  async (req: Request, res: Response) => {
   try {
     const user = await UserModel.findById(req.userId);
 
