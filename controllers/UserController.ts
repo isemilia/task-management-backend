@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-import UserModel from '../models/User.js';
+import UserModel from '../models/User';
 
 if(process.env.DATABASE_URI === undefined || process.env.JWT_SECRET === undefined){
   throw Error("DATABASE_URI")
