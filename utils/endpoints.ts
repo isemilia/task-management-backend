@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express'
 import {loginValidation, signupValidation} from '../validations/auth'
 import checkAuth from '../utils/checkAuth'
 import UserController from '../controllers/UserController';
-import TaskController from '../controllers/TaskController'
+import TaskController, {getAllByCurrentUser} from '../controllers/TaskController'
 import {createTaskValidation} from '../validations/task';
 
 const router = express.Router()
@@ -21,7 +21,7 @@ router.get('/auth/me', checkAuth, UserController.getMe);
 
 // task routes
 router.post('/tasks', checkAuth, ...createTaskValidation, TaskController.create);
-// router.get('/tasks', checkAuth, TaskController.getAll);
+router.get('/tasks', checkAuth, TaskController.getAllByCurrentUser);
 // router.get('/tasks/:id', checkAuth, TaskController.getOne);
 // router.delete('/tasks', checkAuth, TaskController.delete);
 
