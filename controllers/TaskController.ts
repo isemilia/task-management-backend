@@ -4,12 +4,19 @@ import TaskModel from "../models/Task";
 
 export const getAllByCurrentUser = async (req: Request, res: Response) => {
   try {
-    const tasks = await TaskModel.find({user: req.userId});
+    const tasks: any[] = await TaskModel.find({user: req.userId}).populate('user').exec();
 
     res.json({
       isSuccess: true,
       data: {
-        tasks
+        tasks: tasks.map((task) => ({
+          ...task._doc,
+          user: {
+            _id: task._doc.user.id,
+            name: task._doc.user.name,
+            username: task._doc.user.username,
+          }
+        }))
       },
       info: {
         message: null,
