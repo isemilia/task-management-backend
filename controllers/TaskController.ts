@@ -6,7 +6,16 @@ export const getAllByCurrentUser = async (req: Request, res: Response) => {
   try {
     const tasks = await TaskModel.find({user: req.userId});
 
-    console.log(tasks)
+    res.json({
+      isSuccess: true,
+      data: {
+        tasks
+      },
+      info: {
+        message: null,
+        details: null
+      }
+    });
   } catch (err) {
     console.log(err);
 
