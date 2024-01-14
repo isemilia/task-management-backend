@@ -2,7 +2,6 @@ import {Request, Response} from 'express';
 
 import TaskModel from "../models/Task";
 
-// haven't tested yet, it may or may not work
 export const create = async (req: Request, res: Response) => {
   try {
     const task = new TaskModel({
@@ -16,7 +15,7 @@ export const create = async (req: Request, res: Response) => {
     await task.save()
       .then((savedTask) => {
         res.json({
-          isSuccess: false,
+          isSuccess: true,
           data: {
             task: savedTask
           },
@@ -33,9 +32,11 @@ export const create = async (req: Request, res: Response) => {
       isSuccess: false,
       data: {},
       info: {
-        message: 'Failed to create user',
+        message: 'Failed to create task',
         details: null
       }
     });
   }
 }
+
+export default { create }
