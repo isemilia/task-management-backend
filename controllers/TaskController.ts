@@ -114,7 +114,10 @@ export const updateOne = async (req: Request, res: Response) => {
       labels: req.body.labels,
       title: req.body.title,
       description: req.body.description,
-      deadline: req.body.deadline
+      deadline: req.body.deadline,
+      status: {
+        id: req.body.status.id
+      }
     });
 
     res.json({
@@ -147,6 +150,9 @@ export const create = async (req: Request, res: Response) => {
       title: req.body.title,
       description: req.body.description,
       deadline: req.body.deadline,
+      status: {
+        id: req.body.status.id
+      },
       user: req.userId
     });
 
