@@ -1,15 +1,3 @@
-## init ts
+# Task manager backend
 
-`npm i typescript`
-
-`tsc --init`
-
-`npm i --save-dev @types/express`
-
-`npm i --save-dev @types/jsonwebtoken`
-
-`npm i --save-dev @types/bcrypt`
-
-2 файла 
-index.old.ts это рефактор старого на ts
-index.ts это рефактор старого на ts
+https://github.com/isemilia/task-management
