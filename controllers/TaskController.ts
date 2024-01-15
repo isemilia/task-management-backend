@@ -73,6 +73,37 @@ export const getOne = async (req: Request, res: Response) => {
   }
 }
 
+export const remove = async (req: Request, res: Response) => {
+  try {
+    const taskId = req.params.id;
+
+    await TaskModel.findByIdAndDelete({
+      _id: taskId
+    });
+
+    res.json({
+      isSuccess: true,
+      data: {},
+      info: {
+        message: null,
+        details: null
+      }
+    });
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      isSuccess: false,
+      data: {},
+      info: {
+        message: 'Failed to delete task',
+        details: null
+      }
+    });
+  }
+}
+
 export const create = async (req: Request, res: Response) => {
   try {
     const task = new TaskModel({
@@ -110,4 +141,4 @@ export const create = async (req: Request, res: Response) => {
   }
 }
 
-export default { create, getAllByCurrentUser, getOne }
+export default { create, getAllByCurrentUser, getOne, remove }

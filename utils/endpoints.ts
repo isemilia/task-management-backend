@@ -23,6 +23,6 @@ router.get('/auth/me', checkAuth, UserController.getMe);
 router.post('/tasks', checkAuth, ...createTaskValidation, TaskController.create);
 router.get('/tasks', checkAuth, TaskController.getAllByCurrentUser);
 router.get('/tasks/:id', checkAuth, TaskController.getOne);
-// router.delete('/tasks', checkAuth, TaskController.delete);
+router.delete('/tasks/:id', checkAuth, TaskController.remove);
 
 export default router
