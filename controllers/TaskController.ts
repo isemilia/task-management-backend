@@ -73,13 +73,80 @@ export const getOne = async (req: Request, res: Response) => {
   }
 }
 
+export const remove = async (req: Request, res: Response) => {
+  try {
+    const taskId = req.params.id;
+
+    await TaskModel.findByIdAndDelete({
+      _id: taskId
+    });
+
+    res.json({
+      isSuccess: true,
+      data: {},
+      info: {
+        message: null,
+        details: null
+      }
+    });
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      isSuccess: false,
+      data: {},
+      info: {
+        message: 'Failed to delete task',
+        details: null
+      }
+    });
+  }
+}
+
+export const updateOne = async (req: Request, res: Response) => {
+  try {
+    const taskId = req.params.id;
+
+    await TaskModel.updateOne({
+      _id: taskId
+    }, {
+      labels: req.body.labels,
+      title: req.body.title,
+      description: req.body.description,
+      deadline: req.body.deadline
+    });
+
+    res.json({
+      isSuccess: true,
+      data: {},
+      info: {
+        message: null,
+        details: null
+      }
+    });
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      isSuccess: false,
+      data: {},
+      info: {
+        message: 'Failed to update task',
+        details: null
+      }
+    });
+  }
+}
+
 export const create = async (req: Request, res: Response) => {
   try {
     const task = new TaskModel({
       labels: req.body.labels,
       title: req.body.title,
       description: req.body.description,
-      date: req.body.date,
+      deadline: req.body.deadline,
       user: req.userId
     });
 
@@ -110,4 +177,4 @@ export const create = async (req: Request, res: Response) => {
   }
 }
 
-export default { create, getAllByCurrentUser, getOne }
+export default { create, getAllByCurrentUser, getOne, remove, updateOne }
