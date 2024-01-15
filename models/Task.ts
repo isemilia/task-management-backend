@@ -17,6 +17,12 @@ const TaskSchema = new mongoose.Schema({
     type: Array,
     default: []
   },
+  status: {
+    type: Object,
+    default: {
+      id: 1
+    }
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
