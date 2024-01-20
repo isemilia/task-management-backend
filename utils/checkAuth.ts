@@ -24,7 +24,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
       console.log(err);
 
       return res.status(500).json({
-        isSuccess: false,
         data: {},
         info: {
           message: 'Access denied',
@@ -34,7 +33,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
     }
   } else {
     return res.status(403).json({
-      isSuccess: false,
       data: {},
       info: {
         message: 'Access denied',
