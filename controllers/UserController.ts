@@ -18,8 +18,7 @@ const signup = async (req: Request, res: Response) => {
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
-        isSuccess: false,
-        data: {},
+                data: {},
         info: {
           message: 'Validation failed',
           details: errors.array()
@@ -49,8 +48,7 @@ const signup = async (req: Request, res: Response) => {
         const { password, ...restUser } = savedDoc;
 
         res.json({
-          isSuccess: true,
-          data: {
+                    data: {
             user: restUser,
             token
           },
@@ -61,8 +59,7 @@ const signup = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      isSuccess: false,
-      data: {},
+            data: {},
       info: {
         message: 'Failed to create user',
         details: null
@@ -79,7 +76,6 @@ const login = async (req: Request, res: Response) => {
 
     if (!user) {
       return res.status(404).json({
-        isSuccess: false,
         data: {},
         info: {
           message: 'User does not exist',
@@ -92,7 +88,6 @@ const login = async (req: Request, res: Response) => {
 
     if (!isValidPw) {
       return res.status(400).json({
-        isSuccess: false,
         data: {},
         info: {
           message: 'Invalid password',
@@ -112,7 +107,6 @@ const login = async (req: Request, res: Response) => {
     const { password, ...restUser } = userDoc;
 
     res.json({
-      isSuccess: true,
       data: {
         user: restUser,
         token
@@ -124,7 +118,6 @@ const login = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      isSuccess: false,
       data: {},
       info: {
         message: 'Failed to log in',
@@ -140,7 +133,6 @@ const getMe =  async (req: Request, res: Response) => {
 
     if (!user) {
       return res.status(404).json({
-        isSuccess: false,
         data: {},
         info: {
           message: 'User not found',
@@ -150,7 +142,6 @@ const getMe =  async (req: Request, res: Response) => {
     }
 
     res.json({
-      isSuccess: true,
       data: {
         user: user
       },
@@ -160,7 +151,6 @@ const getMe =  async (req: Request, res: Response) => {
     console.log(err);
 
     return res.status(500).json({
-      isSuccess: false,
       data: {},
       info: {
         message: 'Failed to get me',

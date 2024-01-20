@@ -7,7 +7,6 @@ export const getAllByCurrentUser = async (req: Request, res: Response) => {
     const tasks: any[] = await TaskModel.find({user: req.userId}).populate('user').exec();
 
     res.json({
-      isSuccess: true,
       data: {
         tasks: tasks.map((task) => ({
           ...task._doc,
@@ -27,7 +26,6 @@ export const getAllByCurrentUser = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      isSuccess: false,
       data: {},
       info: {
         message: 'Failed to get tasks by user ID',
@@ -43,8 +41,7 @@ export const getOne = async (req: Request, res: Response) => {
     const task: any = await TaskModel.findById(taskId).populate('user').exec();
 
     res.json({
-      isSuccess: true,
-      data: {
+            data: {
         task: {
           ...task._doc,
           user: {
@@ -63,7 +60,6 @@ export const getOne = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      isSuccess: false,
       data: {},
       info: {
         message: 'Failed to get task',
@@ -82,7 +78,6 @@ export const remove = async (req: Request, res: Response) => {
     });
 
     res.json({
-      isSuccess: true,
       data: {},
       info: {
         message: null,
@@ -94,7 +89,6 @@ export const remove = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      isSuccess: false,
       data: {},
       info: {
         message: 'Failed to delete task',
@@ -121,7 +115,6 @@ export const updateOne = async (req: Request, res: Response) => {
     });
 
     res.json({
-      isSuccess: true,
       data: {},
       info: {
         message: null,
@@ -133,7 +126,6 @@ export const updateOne = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      isSuccess: false,
       data: {},
       info: {
         message: 'Failed to update task',
@@ -159,7 +151,6 @@ export const create = async (req: Request, res: Response) => {
     await task.save()
       .then((savedTask) => {
         res.json({
-          isSuccess: true,
           data: {
             task: savedTask
           },
@@ -173,7 +164,6 @@ export const create = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      isSuccess: false,
       data: {},
       info: {
         message: 'Failed to create task',
