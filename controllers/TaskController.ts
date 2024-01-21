@@ -7,7 +7,7 @@ export const getAllByCurrentUser = async (req: Request, res: Response) => {
     const tasks: any[] = await TaskModel.find({user: req.userId}).populate('user').exec();
 
     res.json({
-      data: {
+      result: {
         tasks: tasks.map((task) => ({
           ...task._doc,
           user: {
@@ -26,7 +26,7 @@ export const getAllByCurrentUser = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      data: {},
+      result: {},
       info: {
         message: 'Failed to get tasks by user ID',
         details: null
@@ -41,7 +41,7 @@ export const getOne = async (req: Request, res: Response) => {
     const task: any = await TaskModel.findById(taskId).populate('user').exec();
 
     res.json({
-            data: {
+            result: {
         task: {
           ...task._doc,
           user: {
@@ -60,7 +60,7 @@ export const getOne = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      data: {},
+      result: {},
       info: {
         message: 'Failed to get task',
         details: null
@@ -78,7 +78,7 @@ export const remove = async (req: Request, res: Response) => {
     });
 
     res.json({
-      data: {},
+      result: {},
       info: {
         message: null,
         details: null
@@ -89,7 +89,7 @@ export const remove = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      data: {},
+      result: {},
       info: {
         message: 'Failed to delete task',
         details: null
@@ -115,7 +115,7 @@ export const updateOne = async (req: Request, res: Response) => {
     });
 
     res.json({
-      data: {},
+      result: {},
       info: {
         message: null,
         details: null
@@ -126,7 +126,7 @@ export const updateOne = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      data: {},
+      result: {},
       info: {
         message: 'Failed to update task',
         details: null
@@ -151,7 +151,7 @@ export const create = async (req: Request, res: Response) => {
     await task.save()
       .then((savedTask) => {
         res.json({
-          data: {
+          result: {
             task: savedTask
           },
           info: {
@@ -164,7 +164,7 @@ export const create = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      data: {},
+      result: {},
       info: {
         message: 'Failed to create task',
         details: null

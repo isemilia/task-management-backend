@@ -28,10 +28,10 @@ app.use(cors({
   credentials: true
 }));
 
-app.use((req, res, next) => {
-  console.log(req.cookies)
-  next();
-})
+// app.use((req, res, next) => {
+//   console.log(req.cookies)
+//   next();
+// })
 
 app.use(router);
 
