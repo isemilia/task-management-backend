@@ -33,7 +33,7 @@ const signup = async (req: Request, res: Response) => {
       username: req.body.username,
       password: hashedPassword,
       name: req.body.name,
-      avatar: req.body.avatar,
+      // avatar: req.body.avatar,
     });
 
     await user.save()
@@ -48,7 +48,7 @@ const signup = async (req: Request, res: Response) => {
         const { password, ...restUser } = savedDoc;
 
         res.json({
-                    result: {
+          result: {
             user: restUser,
             token
           },
