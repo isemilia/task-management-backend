@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 import router from './endpoints'
 
@@ -20,11 +21,20 @@ const app = express();
 
 app.use(express.json());
 
+app.use(cookieParser());
+
 app.use(cors({
-  origin: 'http://localhost:5173'
+  origin: 'http://localhost:5173',
+  credentials: true
 }));
 
+// app.use((req, res, next) => {
+//   console.log(req.cookies)
+//   next();
+// })
+
 app.use(router);
+
 
 app.listen(4000, () => {
   console.log('Server is running at port 4000');

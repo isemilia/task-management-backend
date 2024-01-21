@@ -18,7 +18,7 @@ const signup = async (req: Request, res: Response) => {
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
-                data: {},
+                result: {},
         info: {
           message: 'Validation failed',
           details: errors.array()
@@ -48,7 +48,7 @@ const signup = async (req: Request, res: Response) => {
         const { password, ...restUser } = savedDoc;
 
         res.json({
-                    data: {
+                    result: {
             user: restUser,
             token
           },
@@ -59,7 +59,7 @@ const signup = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-            data: {},
+            result: {},
       info: {
         message: 'Failed to create user',
         details: null
@@ -76,7 +76,7 @@ const login = async (req: Request, res: Response) => {
 
     if (!user) {
       return res.status(404).json({
-        data: {},
+        result: {},
         info: {
           message: 'User does not exist',
           details: null
@@ -88,7 +88,7 @@ const login = async (req: Request, res: Response) => {
 
     if (!isValidPw) {
       return res.status(400).json({
-        data: {},
+        result: {},
         info: {
           message: 'Invalid password',
           details: null
@@ -107,7 +107,7 @@ const login = async (req: Request, res: Response) => {
     const { password, ...restUser } = userDoc;
 
     res.json({
-      data: {
+      result: {
         user: restUser,
         token
       },
@@ -118,7 +118,7 @@ const login = async (req: Request, res: Response) => {
     console.log(err);
 
     res.status(500).json({
-      data: {},
+      result: {},
       info: {
         message: 'Failed to log in',
         details: null
@@ -133,7 +133,7 @@ const getMe =  async (req: Request, res: Response) => {
 
     if (!user) {
       return res.status(404).json({
-        data: {},
+        result: {},
         info: {
           message: 'User not found',
           details: null
@@ -142,7 +142,7 @@ const getMe =  async (req: Request, res: Response) => {
     }
 
     res.json({
-      data: {
+      result: {
         user: user
       },
       info: {}
@@ -151,7 +151,7 @@ const getMe =  async (req: Request, res: Response) => {
     console.log(err);
 
     return res.status(500).json({
-      data: {},
+      result: {},
       info: {
         message: 'Failed to get me',
         details: null

@@ -3,7 +3,9 @@ import express, {NextFunction, Request, Response} from 'express'
 
 
 export default (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization || '';
+  const token = req.cookies?.token || '';
+
+  console.log(req.cookies)
 
   if(process.env.JWT_SECRET === undefined){
     throw Error("DATABASE_URI")
@@ -24,7 +26,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
       console.log(err);
 
       return res.status(500).json({
-        data: {},
+        result: {},
         info: {
           message: 'Access denied',
           details: null
@@ -33,7 +35,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
     }
   } else {
     return res.status(403).json({
-      data: {},
+      result: {},
       info: {
         message: 'Access denied',
         details: null
