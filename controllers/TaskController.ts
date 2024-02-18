@@ -102,16 +102,20 @@ export const updateOne = async (req: Request, res: Response) => {
   try {
     const taskId = req.params.id;
 
+    const {labels, title, description, deadline, status} = req.body
+
     await TaskModel.updateOne({
       _id: taskId
     }, {
-      labels: req.body.labels,
-      title: req.body.title,
-      description: req.body.description,
-      deadline: req.body.deadline,
-      status: {
-        id: req.body.status.id
-      }
+      ...(labels? { labels } : {}),
+      ...(title? { title } : {}),
+      ...(description? { description } : {}),
+      ...(deadline? { deadline } : {}),
+      ...(status ? {
+        status: {
+          id: status.id
+        }
+      } : {})
     });
 
     res.json({
