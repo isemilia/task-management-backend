@@ -5,11 +5,11 @@ import bcrypt from 'bcrypt';
 
 import UserModel from '../models/User';
 
-if(process.env.DATABASE_URI === undefined || process.env.JWT_SECRET === undefined){
-  throw Error("DATABASE_URI")
+if(process.env.MONGODB_URI === undefined || process.env.JWT_SECRET === undefined){
+  throw Error("MONGODB_URI")
 }
 
-const DATABASE_URI = process.env.DATABASE_URI
+const MONGODB_URI = process.env.MONGODB_URI
 const JWT_SECRET = process.env.JWT_SECRET
 
 const signup = async (req: Request, res: Response) => {

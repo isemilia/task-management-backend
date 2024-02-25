@@ -5,11 +5,11 @@ import cookieParser from 'cookie-parser'
 
 import router from './endpoints'
 
-if(process.env.DATABASE_URI === undefined){
-  throw Error('env DATABASE_URI is undefined')
+if(process.env.MONGODB_URI === undefined){
+  throw Error('env MONGODB_URI is undefined')
 }
 mongoose
-  .connect(process.env.DATABASE_URI)
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to database');
   })
