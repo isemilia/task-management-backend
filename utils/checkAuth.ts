@@ -6,7 +6,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies?.token || '';
 
   if(process.env.JWT_SECRET === undefined){
-    throw Error("DATABASE_URI")
+    throw Error("MONGODB_URI")
   }
 
   if (token) {
