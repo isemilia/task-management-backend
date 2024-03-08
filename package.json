@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node .",
-    "dev": "tsc && nodemon ."
+    "start": "node .",
+    "dev": "tsc && nodemon .",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
