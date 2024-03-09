@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "outDir": "build"
   },
-  "include": ["*.ts", "**/*.ts"]
+  "include": ["src/*.ts", "src/**/*.ts"]
 }
