@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
 import express, {NextFunction, Request, Response} from 'express'
 
-
-export default (req: Request, res: Response, next: NextFunction) => {
+const checkAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies?.token || '';
 
-  if(process.env.JWT_SECRET === undefined){
-    throw Error("MONGODB_URI")
+  console.log(req.cookies)
+
+  if(!process.env.JWT_SECRET){
+    throw Error('JWT_SECRET is not defined');
   }
 
   if (token) {
@@ -41,3 +42,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
     });
   }
 }
+
+
+export default checkAuth
