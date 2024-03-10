@@ -4,7 +4,7 @@ import express, {NextFunction, Request, Response} from 'express'
 const checkAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies?.token || req.headers?.authorization || '';
 
-  console.log('token:', token)
+  // console.log('token:', token)
 
   if(!process.env.JWT_SECRET){
     throw Error('JWT_SECRET is not defined');
