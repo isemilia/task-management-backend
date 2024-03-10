@@ -24,8 +24,15 @@ app.use(express.json());
 
 app.use(cookieParser());
 
+const allowedOrigins = ['http://localhost:5173', 'https://tasks-isemilia.vercel.app']
 app.use(cors({
-  origin: '*',
+  origin: (requestOrigin, checkOrigin) => {
+    if (requestOrigin && allowedOrigins.includes(requestOrigin)) {
+      checkOrigin(null, true)
+    } else {
+      checkOrigin(new Error('Not allowed by CORS.'))
+    }
+  },
   credentials: true
 }));
 
